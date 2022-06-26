@@ -1,0 +1,21 @@
+syntax = "proto3";
+package de.othr.grpc;
+option java_multiple_files = true;
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message Messwert {
+  string location = 1;
+  double value = 2;
+}
+
+message Bewertung {
+  string action = 1;
+  google.protobuf.Timestamp date = 2;
+}
+
+service MesswertService {
+  rpc save (stream Messwert) returns (google.protobuf.Empty);
+  rpc monitor (stream Messwert) returns (stream Bewertung);
+}
+// see link "Protocol Buffers Well-Known Types" in README for pre-defined types
